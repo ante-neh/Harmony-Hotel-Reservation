@@ -1,8 +1,8 @@
 build:
-	@echo "Building..."
-	@go build -o bin/cmd/api
+	@go build -o bin/binary cmd/api/main.go
+
 run:build
-	@./bin/cmd/api
+	@go run ./bin/binary
 
 test:
-	@go test -v ./..
+	@go test -v ./...
