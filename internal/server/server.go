@@ -6,25 +6,25 @@ import (
 )
 
 type Server struct {
-	infoLog  *log.Logger
-	errorLog *log.Logger 
-	address string 
+	InfoLogger  *log.Logger
+	ErrorLogger *log.Logger 
+	Address string 
 }
 
 
 func NewServer(infoLog, errorLog *log.Logger, address string) *Server{
 	return &Server{
-		infoLog:infoLog,
-		errorLog:errorLog,
-		address:address,
+		InfoLogger:infoLog,
+		ErrorLogger:errorLog,
+		Address:address,
 	}
 }
 
 
 func (s *Server) Start() *http.Server{
 	return &http.Server{
-		Addr:s.address,
-		ErrorLog:s.errorLog,
+		Addr:s.Address,
+		ErrorLog:s.ErrorLogger,
 		Handler:s.Router(),
 	}
 }

@@ -11,25 +11,32 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil{
-		log.Panic()
+
 	}
+
+	//importing the port address and the connection string from .env file
 	port := os.Getenv("PORT")
-	connString := os.Getenv("CONN")
-	address := flag.String("address", port, "server address")
-	dns := flag.String("connectionString", connString, "connection string to mongoDB")
+	connectionString := os.Getenv("CONN")
+
+	//accepting the port address and the connection string from the cli
+	address := flag.String("address", port, "Server address")
+	_ = flag.String("connectionString", connectionString, "database connection string")
 	flag.Parse() 
 
+	//create custome loggers
 	infoLogger := log.New(os.Stdout, "INFO: ", log.Ltime | log.Ldate)
-	errorLogger := log.New(os.Stdout, "ERROR: ", log.Ltime | log.Ldate | log.Lshortfile) 
+	errorLogger := log.New(os.Stdout, "Error: ", log.Ltime | log.Ldate | log.Lshortfile) 
 
-	app := server.NewServer(infoLogger, errorLogger, *address )
+
+	//create a new server 
+	app := server.NewServer(infoLogger, errorLogger, *address) 
+
+	//start the server 
 	server := app.Start() 
+	app.InfoLogger.Println("Server is running on port ", *address) 
 	err = server.ListenAndServe()
-
-	log.Println("Server is running on port:", *address)
 	
 	if err != nil{
-		errorLogger.Fatal("Unable to start")
-	} 
-
+		app.ErrorLogger.Println(err)
+	}
 }
