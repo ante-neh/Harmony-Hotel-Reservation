@@ -23,3 +23,5 @@ func ResponseWithJson(w http.ResponseWriter, code int, payload interface{}) erro
 func ResponseWithError(w http.ResponseWriter, code int, message string ){
 	ResponseWithJson(w, code, map[string]string{"error":message})
 }
+
+

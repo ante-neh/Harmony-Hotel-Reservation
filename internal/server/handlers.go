@@ -1,9 +1,9 @@
 package server
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
-
 	"github.com/ante-neh/Harmony-Hotel-Reservation/types"
 	"github.com/ante-neh/Harmony-Hotel-Reservation/util"
 )
@@ -29,7 +29,8 @@ func (s *Server) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 		return 
 	}
 
-	userData, err := s.DB.CreateUser(params.UserName, params.Email, params.Password)
+	ctx := context.Background()
+	userData, err := s.DB.CreateUser(ctx, params.UserName, params.Email, params.Password)
 
 	if err != nil{
 		util.ResponseWithError(w, 400, "Couldn't create user")
@@ -40,5 +41,28 @@ func (s *Server) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 
 
 func (s *Server) HandleGetUser(w http.ResponseWriter, r *http.Request, user types.User){
+	ctx := context.Background() 
+	userData, err := s.DB.GetUser(ctx, user.ID)
+
+	if err != nil{
+		s.ErrorLogger.Println(err)
+		util.ResponseWithError(w, 400, "Couldn't get user")
+		return 
+	}
+
+	util.ResponseWithJson(w, 200, userData)
 	
+}
+
+
+func (s *Server) HandleGetUsers(w http.ResponseWriter, r *http.Request){
+	ctx := context.Background()
+	users, err := s.DB.GetUsers(ctx) 
+	if err != nil{
+		s.ErrorLogger.Println(err)
+		util.ResponseWithError(w, 400, "Couldn't get users")
+		return 
+	}
+
+	util.ResponseWithJson(w, 200, users)
 }
