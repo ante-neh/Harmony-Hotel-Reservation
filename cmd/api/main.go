@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+	//load .env files
 	err := godotenv.Load()
 	if err != nil{
 
@@ -38,7 +39,7 @@ func main() {
 	client, err := openDb(*connection)
 
 	if err != nil{
-		errorLogger.Fatal("Unable to Connect to the database", err)
+		errorLogger.Println("Unable to Connect to the database", err)
 	}
 
 
