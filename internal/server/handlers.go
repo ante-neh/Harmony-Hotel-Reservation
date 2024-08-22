@@ -15,22 +15,28 @@ func (s *Server) HandleHealthz(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 	type parameter struct {
-		UserName string `bson:"name" json:"name"`
-		Email    string `bson:"email" json:"email"`
-		Password string `bson:"password" json:"password"`
+		Name     string    `bson:"name" json:"name"`
+		Email    string    `bson:"email" json:"email"`
+		Password string    `bson:"password" json:"_"`
 	}
 
 	params := &parameter{} 
 
 	err := json.NewDecoder(r.Body).Decode(&params)
-
 	if err != nil{
 		util.ResponseWithError(w, 400, "Bad request")
 		return 
 	}
 
+	user := &types.User{
+		Name:params.Name,
+		Email: params.Email,
+		Password: params.Password,
+	}
+
+
 	ctx := context.Background()
-	userData, err := s.DB.CreateUser(ctx, params.UserName, params.Email, params.Password)
+	userData, err := s.DB.CreateUser(ctx, user)
 
 	if err != nil{
 		util.ResponseWithError(w, 400, "Couldn't create user")

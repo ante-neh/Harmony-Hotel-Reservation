@@ -4,49 +4,46 @@ import (
 	"context"
 	"github.com/ante-neh/Harmony-Hotel-Reservation/types"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 
 type UserStore interface{
 	GetUser(context.Context, string)(*types.User, error)
-	CreateUser(context.Context, string, string, string)(types.User, error)
+	GetUsers(context.Context)([]*types.User, error)
+	CreateUser(context.Context, *types.User)(*types.User, error)
 }
 type MongoDb struct {
 	Client *mongo.Client
 }
 
 
-func (m *MongoDb) CreateUser(ctx context.Context, userName, email, password string)(*types.User, error){
+func (m *MongoDb) CreateUser(ctx context.Context, user *types.User) (*types.User, error) {
 	collection, err := m.GetCollection("users")
-	if err != nil{
-		return &types.User{}, err
-	}
-	// user := types.User{}
-	_, err = collection.InsertOne(ctx, bson.M{})
-
-	if err != nil{
-		return &types.User{}, err
+	if err != nil {
+		return nil, err
 	}
 
-	return &types.User{}, nil 
-} 
+	result, err := collection.InsertOne(ctx, user)
+	if err != nil {
+		return nil, err
+	}
 
-func (m *MongoDb) GetUser(ctx context.Context, id string)(*types.User, error){
+	user.ID = result.InsertedID.(primitive.ObjectID)
+	return user, nil
+}
+
+func (m *MongoDb) GetUser(ctx context.Context, id primitive.ObjectID)(*types.User, error){
 	collection, err := m.GetCollection("users")
 	user := types.User{} 
 
 	if err != nil{
 		return &types.User{}, err
 	}
-
-	objectId, err := ToBsonObject(id)
-
-	if err != nil{
-		return &types.User{}, err
-	}
 	
-	err = collection.FindOne(ctx, bson.M{"_id":objectId}).Decode(&user)
+	
+	err = collection.FindOne(ctx, bson.M{"_id":id}).Decode(&user)
 
 	if err != nil{
 		return &types.User{}, err
@@ -72,7 +69,7 @@ func (m *MongoDb) GetUsers(ctx context.Context)([]*types.User, error){
 	err = result.Decode(&users) 
 
 	if err != nil{
-		return []*types.User{}, err
+		return []*types.User{}, nil
 	}
 
 	return users, nil 
