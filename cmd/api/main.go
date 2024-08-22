@@ -14,8 +14,9 @@ func main() {
 		log.Panic()
 	}
 	port := os.Getenv("PORT")
-	log.Println(port)
+	connString := os.Getenv("CONN")
 	address := flag.String("address", port, "server address")
+	dns := flag.String("connectionString", connString, "connection string to mongoDB")
 	flag.Parse() 
 
 	infoLogger := log.New(os.Stdout, "INFO: ", log.Ltime | log.Ldate)
