@@ -13,10 +13,11 @@ type Server struct {
 	ErrorLogger *log.Logger 
 	Address string 
 	DB *database.MongoDb
+	Bcrypt int
 }
 
 
-func NewServer(infoLog, errorLog *log.Logger, address string, client *mongo.Client) *Server{
+func NewServer(infoLog, errorLog *log.Logger, address string, client *mongo.Client, bycrpt int) *Server{
 	return &Server{
 		InfoLogger:infoLog,
 		ErrorLogger:errorLog,
@@ -24,6 +25,7 @@ func NewServer(infoLog, errorLog *log.Logger, address string, client *mongo.Clie
 		DB:&database.MongoDb{
 			Client:client,
 		},
+		Bcrypt: bycrpt,
 	}
 }
 

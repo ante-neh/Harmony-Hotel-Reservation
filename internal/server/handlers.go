@@ -28,10 +28,18 @@ func (s *Server) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 		return 
 	}
 
+	//hash the password
+	hashedPassword, err := util.Encrypt(params.Password, s.Bcrypt) 
+	if err != nil{
+		util.ResponseWithError(w, 400, "Bad request")
+		return 
+	}
+
+
 	user := &types.User{
 		Name:params.Name,
 		Email: params.Email,
-		Password: params.Password,
+		Password: hashedPassword,
 	}
 
 
