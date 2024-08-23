@@ -5,6 +5,8 @@ import (
 	"flag"
 	"log"
 	"os"
+	"strconv"
+
 	"github.com/ante-neh/Harmony-Hotel-Reservation/internal/server"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -21,13 +23,13 @@ func main() {
 	//importing the port address and the connection string from .env file
 	port := os.Getenv("PORT")
 	connectionString := os.Getenv("CONN")
-
-
+	bcrypt, _ := strconv.Atoi(os.Getenv("BCRYPT"))
+	
 	//accepting the port address and the connection string from the cli
 	address := flag.String("address", port, "Server address")
 	connection := flag.String("connectionString", connectionString, "database connection string")
+	encription := flag.Int("bcrypt", bcrypt, "encrption cost")
 	flag.Parse() 
-
 
 	//create custome loggers
 	infoLogger := log.New(os.Stdout, "INFO: ", log.Ltime | log.Ldate)
@@ -43,7 +45,7 @@ func main() {
 
 
 	//create a new server 
-	app := server.NewServer(infoLogger, errorLogger, *address, client) 
+	app := server.NewServer(infoLogger, errorLogger, *address, client, *encription) 
 
 	//start the server 
 	server := app.Start() 

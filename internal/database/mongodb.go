@@ -10,9 +10,11 @@ import (
 
 
 type UserStore interface{
-	GetUser(context.Context, string)(*types.User, error)
 	GetUsers(context.Context)([]*types.User, error)
+	DeleteUser(context.Context, string)(string, error)
+	GetUser(context.Context, string)(*types.User, error)
 	CreateUser(context.Context, *types.User)(*types.User, error)
+	UpdateUser(context.Context, primitive.ObjectID)(*types.User, error)
 }
 type MongoDb struct {
 	Client *mongo.Client
@@ -74,4 +76,42 @@ func (m *MongoDb) GetUsers(ctx context.Context)([]*types.User, error){
 	}
 
 	return users, nil 
+}
+
+
+func (m *MongoDb) DeleteUser(ctx context.Context, id primitive.ObjectID) (string, error){
+	collection, err := m.GetCollection("users") 
+
+	if err != nil{
+		return "table doesn't exist", err
+	}
+	_, err = collection.DeleteOne(ctx, bson.M{"_id":id})
+	
+	if err != nil{
+		return "", err
+	}
+	return "User Deleted", nil 
+}
+
+
+func (m *MongoDb) UpdateUser(ctx context.Context, id primitive.ObjectID, user types.UserRequest)(*types.User, error){
+	collection, err := m.GetCollection("users")
+	if err != nil{
+		return &types.User{}, err
+	}
+
+	update := bson.M{
+		"$set": user,
+	}
+	_, err = collection.UpdateOne(ctx, bson.M{"_id": id}, update)
+	if err != nil{
+		return nil, err
+	}
+
+	userResponse := types.User{
+		ID:user.ID,
+		Name:user.Name,
+		Email:user.Email,
+	}
+	return &userResponse, nil 
 }

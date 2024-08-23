@@ -3,6 +3,7 @@ package util
 import (
 	"encoding/json"
 	"net/http"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func ResponseWithJson(w http.ResponseWriter, code int, payload interface{}) error{
@@ -24,4 +25,12 @@ func ResponseWithError(w http.ResponseWriter, code int, message string ){
 	ResponseWithJson(w, code, map[string]string{"error":message})
 }
 
+func Encrypt(password string, cost int) (string, error){
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), cost)
 
+	if err != nil{
+		return "", err
+	}
+
+	return string(hashedPassword), nil 
+}
