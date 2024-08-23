@@ -14,8 +14,13 @@ type User struct {
 	Password string    `bson:"password" json:"-"`
 }
 
+type UserRequest struct {
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
 
-func (u *User) ValidateUser()map[string]string{
+func (u *UserRequest) ValidateUser()map[string]string{
 	errors := make(map[string]string) 
 	if len(u.Name) < 2{
 		errors["name"] = "user name should be more than two characters"

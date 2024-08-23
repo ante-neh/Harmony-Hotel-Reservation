@@ -14,17 +14,16 @@ func (s *Server) HandleHealthz(w http.ResponseWriter, r *http.Request) {
 
 
 func (s *Server) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
-	type parameter struct {
-		Name     string    `bson:"name" json:"name"`
-		Email    string    `bson:"email" json:"email"`
-		Password string    `bson:"password" json:"_"`
-	}
-
-	params := &parameter{} 
-
+	params := types.UserRequest{} 
 	err := json.NewDecoder(r.Body).Decode(&params)
 	if err != nil{
 		util.ResponseWithError(w, 400, "Bad request")
+		return 
+	}
+
+	//validate user data
+	if errors := params.ValidateUser(); len(errors) > 0{
+		util.ResponseWithJson(w, 400, errors)
 		return 
 	}
 
