@@ -80,3 +80,44 @@ func (s *Server) HandleGetUsers(w http.ResponseWriter, r *http.Request){
 
 	util.ResponseWithJson(w, 200, users)
 }
+
+
+func (s *Server) HandleRemoveUser(w http.ResponseWriter, r *http.Request, user types.User){
+	ctx := context.Background()
+	response, err := s.DB.DeleteUser(ctx, user.ID) 
+
+	if err != nil {
+		s.ErrorLogger.Println(err)
+		util.ResponseWithError(w, 400, "User doesn't exist")
+		return 
+	}
+
+
+	util.ResponseWithJson(w, 200, map[string]string{"message":response} )
+}
+
+func (s *Server) HandleUpdateUser(w http.ResponseWriter, r *http.Request, user types.User){
+	params := types.UserRequest{} 
+	err := json.NewDecoder(r.Body).Decode(&params)
+
+	if err != nil{
+		util.ResponseWithError(w, 400, "Bad request")
+		return 
+	}
+
+	if errors := params.ValidateUser(); len(errors) > 0{
+		util.ResponseWithJson(w, 400, errors)
+		return 
+	}
+	
+	ctx := context.Background()
+	userData, err := s.DB.UpdateUser(ctx, user.ID)
+
+	if err != nil {
+		s.ErrorLogger.Println(err)
+		util.ResponseWithError(w, 400, "User doesn't exist")
+		return 
+	} 
+
+	util.ResponseWithJson(w, 200, userData)
+}
