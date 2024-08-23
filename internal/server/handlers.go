@@ -64,6 +64,7 @@ func (s *Server) HandleGetUser(w http.ResponseWriter, r *http.Request, user type
 func (s *Server) HandleGetUsers(w http.ResponseWriter, r *http.Request){
 	ctx := context.Background()
 	users, err := s.DB.GetUsers(ctx) 
+	
 	if err != nil{
 		s.ErrorLogger.Println(err)
 		util.ResponseWithError(w, 400, "Couldn't get users")

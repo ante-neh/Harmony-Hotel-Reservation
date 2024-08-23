@@ -1,0 +1,57 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "User end point",
+    "collectionId": "e29d29b8-3ba5-4b52-a97c-cc85ac11048b",
+    "dateExported": "2024-08-23T16:36:29.609Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "dc37e51f-51d8-42ec-8b27-5b5788cb0ba9",
+            "colId": "e29d29b8-3ba5-4b52-a97c-cc85ac11048b",
+            "containerId": "",
+            "name": "get user",
+            "url": "http://localhost:5000/api/v1/users/",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-08-23T16:29:25.039Z",
+            "modified": "2024-08-23T16:33:10.256Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\":\"66c8b9a506ea439c46720bf1\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "58f33bdf-34ef-4a09-b9ac-fb4f598cb6bb",
+            "colId": "e29d29b8-3ba5-4b52-a97c-cc85ac11048b",
+            "containerId": "",
+            "name": "get users",
+            "url": "http://localhost:5000/api/v1/users",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-08-23T16:30:22.273Z",
+            "modified": "2024-08-23T16:30:52.410Z",
+            "headers": []
+        },
+        {
+            "_id": "7aaeb8f0-2a87-447e-b97e-4db95d870534",
+            "colId": "e29d29b8-3ba5-4b52-a97c-cc85ac11048b",
+            "containerId": "",
+            "name": "create user",
+            "url": "http://localhost:5000/api/v1/users",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-08-23T16:31:17.405Z",
+            "modified": "2024-08-23T16:32:37.468Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\":\"anteneh\",\n  \"email\":\"anteneh@gmail.com\",\n  \"password\":\"12345678\"\n}",
+                "form": []
+            }
+        }
+    ],
+    "ref": "NjS4BwgwRWgZeliK-qXG_eUrY0YSXtseXEUvI48xc19CQrOUcCPBfJ32TLw-bVXGxOREUMIs6ZwmX0cJ0R06eg"
+}

@@ -25,6 +25,7 @@ func (m *MongoDb) CreateUser(ctx context.Context, user *types.User) (*types.User
 		return nil, err
 	}
 
+	user.ID = primitive.NewObjectID()
 	result, err := collection.InsertOne(ctx, user)
 	if err != nil {
 		return nil, err
@@ -66,7 +67,7 @@ func (m *MongoDb) GetUsers(ctx context.Context)([]*types.User, error){
 
 	users := []*types.User{} 
 
-	err = result.Decode(&users) 
+	err = result.All(ctx, &users) 
 
 	if err != nil{
 		return []*types.User{}, nil
