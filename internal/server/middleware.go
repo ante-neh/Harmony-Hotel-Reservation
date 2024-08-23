@@ -2,7 +2,6 @@ package server
 
 import (
 	"net/http"
-
 	"github.com/ante-neh/Harmony-Hotel-Reservation/types"
 )
 
