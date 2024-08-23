@@ -82,7 +82,7 @@ func (s *Server) HandleGetUsers(w http.ResponseWriter, r *http.Request){
 }
 
 
-func (s *Server) HandleRemoveUser(w http.ResponseWriter, r *http.Request, user types.User){
+func (s *Server) HandleDeleteUser(w http.ResponseWriter, r *http.Request, user types.User){
 	ctx := context.Background()
 	response, err := s.DB.DeleteUser(ctx, user.ID) 
 
@@ -111,7 +111,7 @@ func (s *Server) HandleUpdateUser(w http.ResponseWriter, r *http.Request, user t
 	}
 	
 	ctx := context.Background()
-	userData, err := s.DB.UpdateUser(ctx, user.ID)
+	userData, err := s.DB.UpdateUser(ctx, user.ID, params)
 
 	if err != nil {
 		s.ErrorLogger.Println(err)

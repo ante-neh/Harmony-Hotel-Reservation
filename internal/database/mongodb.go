@@ -94,6 +94,24 @@ func (m *MongoDb) DeleteUser(ctx context.Context, id primitive.ObjectID) (string
 }
 
 
-func (m *MongoDb) UpdateUser(ctx context.Context, id primitive.ObjectID)(*types.User, error){
-	return &types.User{}, nil 
+func (m *MongoDb) UpdateUser(ctx context.Context, id primitive.ObjectID, user types.UserRequest)(*types.User, error){
+	collection, err := m.GetCollection("users")
+	if err != nil{
+		return &types.User{}, err
+	}
+
+	update := bson.M{
+		"$set": user,
+	}
+	_, err = collection.UpdateOne(ctx, bson.M{"_id": id}, update)
+	if err != nil{
+		return nil, err
+	}
+
+	userResponse := types.User{
+		ID:user.ID,
+		Name:user.Name,
+		Email:user.Email,
+	}
+	return &userResponse, nil 
 }

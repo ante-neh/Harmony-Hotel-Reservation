@@ -17,9 +17,10 @@ type User struct {
 }
 
 type UserRequest struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	ID       primitive.ObjectID `bson:"_id, omitempty" json:"id,omitempty"`
+	Name     string  `bson:"name" json:"name"`
+	Email    string `bson:"email" json:"email"`
+	Password string `bson:"password" json:"-"`
 }
 
 func (u *UserRequest) ValidateUser() map[string]string {

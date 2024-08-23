@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "User end point",
     "collectionId": "e29d29b8-3ba5-4b52-a97c-cc85ac11048b",
-    "dateExported": "2024-08-23T16:36:29.609Z",
+    "dateExported": "2024-08-23T19:08:48.751Z",
     "version": "1.2",
     "folders": [],
     "requests": [
@@ -15,11 +15,11 @@
             "method": "GET",
             "sortNum": 20000,
             "created": "2024-08-23T16:29:25.039Z",
-            "modified": "2024-08-23T16:33:10.256Z",
+            "modified": "2024-08-23T16:48:33.413Z",
             "headers": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"id\":\"66c8b9a506ea439c46720bf1\"\n}",
+                "raw": "{\n  \"id\":66c8b9a506ea439c46720bf1\n}",
                 "form": []
             }
         },
@@ -44,14 +44,38 @@
             "method": "POST",
             "sortNum": 40000,
             "created": "2024-08-23T16:31:17.405Z",
-            "modified": "2024-08-23T16:32:37.468Z",
+            "modified": "2024-08-23T17:59:20.819Z",
             "headers": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\":\"anteneh\",\n  \"email\":\"anteneh@gmail.com\",\n  \"password\":\"12345678\"\n}",
+                "raw": "{\n  \"name\":\"anteneh\",\n  \"email\":\"amare@gmail.com\",\n  \"password\":\"12345678\"\n}",
                 "form": []
             }
+        },
+        {
+            "_id": "049595e0-6dbf-4544-836d-e2a5948f7a70",
+            "colId": "e29d29b8-3ba5-4b52-a97c-cc85ac11048b",
+            "containerId": "",
+            "name": "delete user",
+            "url": "",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-08-23T19:07:26.807Z",
+            "modified": "2024-08-23T19:07:26.808Z",
+            "headers": []
+        },
+        {
+            "_id": "3b2bb4ca-8321-435e-8e1e-6ef6caec870f",
+            "colId": "e29d29b8-3ba5-4b52-a97c-cc85ac11048b",
+            "containerId": "",
+            "name": "update user",
+            "url": "",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-08-23T19:08:17.429Z",
+            "modified": "2024-08-23T19:08:17.429Z",
+            "headers": []
         }
     ],
-    "ref": "NjS4BwgwRWgZeliK-qXG_eUrY0YSXtseXEUvI48xc19CQrOUcCPBfJ32TLw-bVXGxOREUMIs6ZwmX0cJ0R06eg"
+    "ref": "NjS4BwgwRWgZeliK-qXG_XpxWEKxBRAsaJaUK9_ykrVR8SrrRPBQh-8IYq6yYV6fke1BqRmlOICFOtBTsvt_rA"
 }
